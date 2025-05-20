@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#1e1e1e',
     padding: 20,
     borderRadius: 12,
-    marginVertical: 10,
     width: '100%',
   },
   quoteText: {

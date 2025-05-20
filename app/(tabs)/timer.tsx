@@ -19,13 +19,7 @@ export default function TimerScreen() {
         <View style={styles.container}>
             <Text>Timer</Text>
             <TimerDisplay secondsLeft={secondsLeft} isBreak={isBreak} />
-            <TimerControls 
-                isRunning={isRunning}
-                start={startTimer}
-                pause={pauseTimer}
-                reset={resetTimer}
-            />
-
+      <TimerControls isRunning={isRunning} start={startTimer} pause={pauseTimer} reset={resetTimer} />
         </View>
     )
 }

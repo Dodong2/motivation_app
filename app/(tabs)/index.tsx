@@ -1,10 +1,11 @@
 import { QuoteCard } from '@/components/QuoteCard';
 import { useQuote } from '@/hooks/useQoute';
-import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
+import { ActivityIndicator, FlatList, StatusBar as RNStatusBar, StyleSheet, Text, View } from 'react-native';
+
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { ActivityIndicator, FlatList, StyleSheet, Text, View } from 'react-native';
+
 
 type promodoroHistory = {
   timestamp: number
@@ -30,8 +31,9 @@ export default function HomeScreen() {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <StatusBar style="light" backgroundColor="#1e1e1e" />
+    <View style={styles.container}>      
+      <RNStatusBar backgroundColor="#1e1e1e" barStyle="light-content" />
+
       {loading ? (
         <ActivityIndicator size="large" color="#1e1e1e" />
       ) : (
