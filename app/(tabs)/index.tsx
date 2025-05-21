@@ -1,34 +1,15 @@
+import { NotesModal } from '@/components/NotesModal';
 import { QuoteCard } from '@/components/QuoteCard';
+import { useNotes } from '@/context/NotesContext';
 import { useQuote } from '@/hooks/useQoute';
-import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, StatusBar as RNStatusBar, StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
 
-
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
-
-type promodoroHistory = {
-  timestamp: number
-}
+import { ActivityIndicator, Button, FlatList, StatusBar as RNStatusBar, StyleSheet, Text, View } from 'react-native';
 
 export default function HomeScreen() {
   const {quote, loading, error, refresh: fetchQuote} = useQuote()
-  const [history, setHistory] = useState<promodoroHistory[]>([])
-
-    // Load history from AsyncStorage on mount
-  useEffect(() => {
-    const loadHistory = async () => {
-      try {
-        const stored = await AsyncStorage.getItem('pomodoroHistory');
-        if (stored) {
-          setHistory(JSON.parse(stored));
-        }
-      } catch (err) {
-        console.error('Failed to load history:', err);
-      }
-    };
-    loadHistory();
-  }, []);
+  const { notes, deleteNote } = useNotes()
+  const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <View style={styles.container}>      
@@ -40,17 +21,20 @@ export default function HomeScreen() {
         <QuoteCard quote={quote}/>
       )}
 
-    <Text style={styles.historyTitle}>Today's Pomodoros</Text>
+    <Text style={styles.historyTitle}>your Notes</Text>
 
-    <FlatList data={history} keyExtractor={(item, index) => index.toString()}
-    renderItem={({ item }) => (
-      <Text style={styles.historyItem}>
-        {new Date(item.timestamp).toLocaleDateString()}
-      </Text>
-    )}
-    ListFooterComponent={<Text style={styles.empty}>No sessions yet.</Text>}
-    />
-    
+    <FlatList
+        data={notes}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
+          <View>
+            <Text>{item.content}</Text>
+            <Button title="Delete" onPress={() => deleteNote(item.id)} />
+          </View>
+        )}
+      />
+      <Button title="Add Note" onPress={() => setModalVisible(true)} />
+      <NotesModal visible={modalVisible} onClose={() => setModalVisible(false)} />
 
     </View>
   );

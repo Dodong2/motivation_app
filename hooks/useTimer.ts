@@ -1,17 +1,23 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useTimerConfig } from '@/context/TimerConfigContext';
 import * as Haptics from 'expo-haptics';
 import { useEffect, useRef, useState } from 'react';
 import Toast from 'react-native-toast-message';
 
-const WORK_DURATION = 1 * 60;
-const BREAK_DURATION = 1 * 60;
-
 export const useTimer = () => {
+  const { timeFocus, timeBreak } = useTimerConfig();
+
+  const WORK_DURATION = timeFocus * 60;
+  const BREAK_DURATION = timeBreak * 60;
+
   const [secondsLeft, setSecondsLeft] = useState(WORK_DURATION);
   const [isRunning, setIsRunning] = useState(false);
   const [isBreak, setIsBreak] = useState(false);
-  const [timerEnded, setTimerEnded] = useState(false); // ✅ new flag
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const [timerEnded, setTimerEnded] = useState(false);
+  const timerRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    setSecondsLeft(isBreak ? BREAK_DURATION : WORK_DURATION);
+  }, [timeFocus, timeBreak, isBreak]);
 
   useEffect(() => {
     if (isRunning) {
@@ -20,7 +26,8 @@ export const useTimer = () => {
           if (prev <= 1) {
             clearInterval(timerRef.current!);
             setIsRunning(false);
-            setTimerEnded(true); // ✅ Set flag instead of showing Toast directly
+            setTimerEnded(true);
+            // savePomodoroHistory();
             return 0;
           }
           return prev - 1;
@@ -35,20 +42,14 @@ export const useTimer = () => {
     };
   }, [isRunning]);
 
-  // ✅ Show toast and reset timer AFTER state is updated
   useEffect(() => {
     if (timerEnded) {
-      Haptics.notificationAsync(
-      Haptics.NotificationFeedbackType.Success
-    );
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       Toast.show({
         type: 'info',
         text1: isBreak ? 'Break done! Time to focus.' : 'Focus done! Time to break.',
       });
-
       setIsBreak((prev) => !prev);
-      setSecondsLeft(isBreak ? WORK_DURATION : BREAK_DURATION);
-      savePomodoroHistory();
       setTimerEnded(false);
     }
   }, [timerEnded]);
@@ -69,16 +70,16 @@ export const useTimer = () => {
     Toast.show({ type: 'info', text1: 'Timer reset' });
   };
 
-  const savePomodoroHistory = async () => {
-    try {
-      const stored = await AsyncStorage.getItem('pomodoroHistory');
-      const history = stored ? JSON.parse(stored) : [];
-      const updated = [...history, { timestamp: Date.now() }];
-      await AsyncStorage.setItem('pomodoroHistory', JSON.stringify(updated));
-    } catch (err) {
-      console.error('Failed to save pomodoro history:', err);
-    }
-  };
+  //  const savePomodoroHistory = async () => {
+  //   try {
+  //     const stored = await AsyncStorage.getItem('pomodoroHistory');
+  //     const history = stored ? JSON.parse(stored) : [];
+  //     const updated = [...history, { timestamp: Date.now() }];
+  //     await AsyncStorage.setItem('pomodoroHistory', JSON.stringify(updated));
+  //   } catch (err) {
+  //     console.error('Failed to save pomodoro history:', err);
+  //   }
+  // };
 
   return {
     secondsLeft,

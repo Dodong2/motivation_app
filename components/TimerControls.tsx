@@ -1,4 +1,3 @@
-// components/TimerControls.tsx
 import React from 'react';
 import { Button, StyleSheet, View } from 'react-native';
 
