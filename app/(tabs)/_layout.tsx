@@ -38,7 +38,7 @@ export default function TabLayout() {
         name="timer"
         options={{
           title: 'Timer',
-          tabBarIcon: ({ color }) => <Ionicons name="settings-outline" size={28} color={color} />,
+          tabBarIcon: ({ color }) => <Ionicons name="timer-outline" size={28} color={color} />,
         }}
       />
     </Tabs>

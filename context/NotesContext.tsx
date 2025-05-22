@@ -4,12 +4,13 @@ import Toast from 'react-native-toast-message';
 
 type Note = {
   id: number;
+  title: string
   content: string;
 };
 
 type NotesContextType = {
   notes: Note[];
-  addNote: (text: string) => void;
+  addNote: (title: string, content: string) => void;
   deleteNote: (id: number) => void;
 };
 
@@ -42,9 +43,9 @@ export const NotesProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     saveNotes();
   }, [notes]);
 
-  const addNote = useCallback((text: string) => {
-    if (text.trim() === '') return;
-    const newNote = { id: Date.now(), content: text.trim() };
+  const addNote = useCallback((title: string, content: string) => {
+    if (title.trim() === '' && content.trim() === '') return;
+    const newNote = { id: Date.now(), title: title.trim(), content: content.trim() };
     setNotes((prev) => [...prev, newNote]);
   }, []);
 
