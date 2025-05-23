@@ -47,6 +47,15 @@ export const NotesProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     if (title.trim() === '' && content.trim() === '') return;
     const newNote = { id: Date.now(), title: title.trim(), content: content.trim() };
     setNotes((prev) => [...prev, newNote]);
+
+    Toast.show({
+      type: 'success',
+      text1: 'New Note Added 📝',
+      text2: 'Scroll down to Home screen to view notes.',
+      visibilityTime: 5000,
+      autoHide: true,
+    })
+
   }, []);
 
   const deleteNote = useCallback((id: number) => {

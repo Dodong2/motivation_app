@@ -1,6 +1,6 @@
 // hooks/useQuote.ts
-import * as Notifications from 'expo-notifications';
 import { useCallback, useEffect, useState } from 'react';
+import Toast from 'react-native-toast-message';
 
 const QUOTE_API = 'https://zenquotes.io/api/random';
 
@@ -23,7 +23,7 @@ export const useQuote = () => {
       const data: ZenQuote[] = await response.json();
       const newQuote = `${data[0]?.q} — ${data[0]?.a}`;
       setQuote(newQuote);
-      await scheduleNotification(newQuote);
+      showToast(newQuote)
     } catch (err) {
       console.error('Failed to fetch quote:', err);
       setError('Unable to fetch quote. Please try again later.');
@@ -32,23 +32,19 @@ export const useQuote = () => {
     }
   }, []);
 
-  const scheduleNotification = async (message: string) => {
-    try {
-      await Notifications.scheduleNotificationAsync({
-        content: {
-          title: 'Motivational Quote',
-          body: message,
-        },
-        trigger: { seconds: 1 }, // Adjust trigger timing as needed
-      });
-    } catch (err) {
-      console.warn('Notification scheduling failed:', err);
-    }
+  const showToast = (message: string) => {
+    Toast.show({
+      type: 'info',
+      text1: 'Motivational Quote ✨',
+      text2: message,
+      visibilityTime: 6000, // 6 seconds
+      autoHide: true,
+    });
   };
 
   useEffect(() => {
     fetchQuote();
-    const interval = setInterval(fetchQuote, 300000); // Every 5 minutes
+    const interval = setInterval(fetchQuote, 180000); // Every 3 minutes, for 5mins 300000
     return () => clearInterval(interval);
   }, [fetchQuote]);
 

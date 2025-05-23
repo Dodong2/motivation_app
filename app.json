@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "StudySprint",
-    "slug": "StudySprint",
+    "slug": "student",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/bookSplash.png",
@@ -37,7 +37,7 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/bookIcon.png",
+          "image": "./assets/images/bookSplash.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
