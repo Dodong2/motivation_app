@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
 import Toast from 'react-native-toast-message';
 
+
 type Note = {
   id: number;
   title: string
@@ -72,6 +73,7 @@ export const NotesProvider: React.FC<{ children: React.ReactNode }> = ({ childre
           text1: 'Reminder 📝',
           text2: 'Don’t forget your notes!',
         });
+        playNotificationSound()
       }
     }, 180000); // 3 mins
     return () => clearInterval(interval);

@@ -1,4 +1,5 @@
 // hooks/useQuote.ts
+import { playNotificationSound } from '@/utils/playSound';
 import { useCallback, useEffect, useState } from 'react';
 import Toast from 'react-native-toast-message';
 
@@ -40,6 +41,7 @@ export const useQuote = () => {
       visibilityTime: 6000, // 6 seconds
       autoHide: true,
     });
+    playNotificationSound()
   };
 
   useEffect(() => {
