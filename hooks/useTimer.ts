@@ -1,4 +1,5 @@
 import { useTimerConfig } from '@/context/TimerConfigContext';
+import { playNotificationSound } from '@/utils/playSound';
 import * as Haptics from 'expo-haptics';
 import { useEffect, useRef, useState } from 'react';
 import Toast from 'react-native-toast-message';
@@ -49,6 +50,7 @@ export const useTimer = () => {
         type: 'info',
         text1: isBreak ? 'Break done! Time to focus.' : 'Focus done! Time to break.',
       });
+      playNotificationSound();
       setIsBreak((prev) => !prev);
       setTimerEnded(false);
     }

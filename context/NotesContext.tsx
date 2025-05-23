@@ -1,3 +1,4 @@
+import { playNotificationSound } from '@/utils/playSound';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
 import Toast from 'react-native-toast-message';
@@ -55,7 +56,7 @@ export const NotesProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       visibilityTime: 5000,
       autoHide: true,
     })
-
+    playNotificationSound();
   }, []);
 
   const deleteNote = useCallback((id: number) => {
