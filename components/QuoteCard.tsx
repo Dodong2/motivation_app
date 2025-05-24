@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 12,
     width: '100%',
+    elevation: 5
   },
   quoteText: {
     color: '#fff',

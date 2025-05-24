@@ -46,7 +46,7 @@ export const useQuote = () => {
 
   useEffect(() => {
     fetchQuote();
-    const interval = setInterval(fetchQuote, 180000); // Every 3 minutes, for 5mins 300000
+    const interval = setInterval(fetchQuote, 300000); // Every 3 minutes 180000 , for 5mins 300000
     return () => clearInterval(interval);
   }, [fetchQuote]);
 

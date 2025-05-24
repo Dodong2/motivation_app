@@ -166,7 +166,10 @@ const styles = StyleSheet.create({
   ImageText2: {
     color: '#4E71FF',
     fontSize: 20,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    textShadowColor: 'rgba(0, 0, 0, 0.25)',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 3,
   },
   ImageText1: {
     textAlign: 'center',
@@ -187,6 +190,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 5,
     marginTop: 10,
+    elevation: 5
   },
   titleNote1: {
     fontWeight: "bold",
@@ -224,6 +228,9 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     fontWeight: "bold",
     color: "white",
+    textShadowColor: 'rgba(0, 0, 0, 0.25)',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 3,
   },
   iconButton1: {
     backgroundColor: "#FF6363",

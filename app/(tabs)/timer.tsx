@@ -25,11 +25,10 @@ export default function TimerScreen() {
   } = useTimer();
 
   return (
-    <View style={styles.container}>
-      <Button title={show ? 'close' : 'change time'} onPress={show ? closeTimeSet : showTimeSet}/>
-      {show && <TimerSet/>}
-      
-      <Text>Timer</Text>
+    <View style={styles.containerParent}>
+      {/* timer */}
+      <View style={styles.containerChild}>
+      <Text style={{ color: '#4E71FF', fontStyle: 'italic', fontSize: 20, fontWeight: 'bold', fontFamily: 'font1' }}>Promodoro Timer</Text>
       <TimerDisplay secondsLeft={secondsLeft} isBreak={isBreak} />
       <TimerControls
         isRunning={isRunning}
@@ -37,16 +36,33 @@ export default function TimerScreen() {
         pause={pauseTimer}
         reset={resetTimer}
       />
+      </View>
+      {/* for time set */}
+      <Button title={show ? 'close' : 'change time'} onPress={show ? closeTimeSet : showTimeSet}/>
+      {show && <TimerSet/>}
+
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  containerParent: {
     backgroundColor: "white",
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
     paddingHorizontal: 20,
   },
+  containerChild: {
+    width: 300,
+    // height: 300,
+    borderRadius: 10,
+    padding: 10,
+    backgroundColor: '#B0DB9C',
+    justifyContent: "center",
+    alignItems: "center",
+    elevation: 5,
+    marginBottom: 20,
+    marginTop: 100
+  }
 });

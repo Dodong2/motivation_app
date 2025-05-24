@@ -17,13 +17,17 @@ export const TimerSet = () => {
 
 
   return (
-    <View>
-        <Text>Focus Time (minutes)</Text>
+    <View style={styles.container}>
+      <View style={styles.focusTimer}>
+        <Text style={{ fontWeight: 'bold', color: '#FFFDF6' }}>Focus Time (minutes)</Text>
         <TextInput keyboardType='numeric' onChangeText={handleFocusChange} placeholder='Enter focus time' style={styles.input} 
         defaultValue={String(timeFocus)}/>
-        <Text>Break Time (minutes)</Text>
+        </View>
+        <View style={styles.breakTimer}>
+        <Text style={{ fontWeight: 'bold', color: '#FFFDF6' }}>Break Time (minutes)</Text>
         <TextInput keyboardType='numeric' onChangeText={handleBreakChange} placeholder='Enter break time' style={styles.input} 
         defaultValue={String(timeBreak)}/>
+        </View>
     </View>
   )
 }
@@ -32,14 +36,33 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     gap: 10,
-    marginBottom: 20,
+    marginTop: 20,
+    position: 'absolute'
   },
   input: {
     borderBottomWidth: 1,
+    borderColor: '#FFFDF6',
     width: 100,
     textAlign: 'center',
     fontSize: 16,
     padding: 5,
+    color: '#FF6363'
+  },
+  focusTimer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#B0DB9C',
+    padding: 10,
+    borderRadius: 10,
+    elevation: 5,
+  },
+  breakTimer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#B0DB9C',
+    padding: 10,
+    borderRadius: 10,
+    elevation: 5,
   },
 });
 

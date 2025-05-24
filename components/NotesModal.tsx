@@ -21,14 +21,14 @@ export const NotesModal = ({ visible, onClose }: Props) => {
 
   return (
     <Modal visible={visible} animationType="slide" transparent>
-      <View style={{ flex: 1, justifyContent: 'center', padding: 20, backgroundColor: 'rgba(0,0,0,0.5)' }}>
-        <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 8 }}>
-          <Text>Add a note</Text>
+      <View style={styles.containerParent}>
+        <View style={styles.containerChild}>
+          <Text style={{ fontWeight: 'bold', fontSize: 20, color: '#FFFDF6' }}>Add a note</Text>
           <TextInput
             value={title}
             onChangeText={setTitle}
             placeholder="Enter title"
-            style={{ borderBottomWidth: 1, marginBottom: 10 }}
+            style={styles.titleContent}
           />
           <TextInput
             value={content}
@@ -47,14 +47,32 @@ export const NotesModal = ({ visible, onClose }: Props) => {
   );
 };
 
-const styles = StyleSheet.create( {
+const styles = StyleSheet.create({
+  containerParent: {
+    flex: 1, 
+    justifyContent: 'center', 
+    padding: 10, 
+    backgroundColor: 'rgba(0,0,0,0.5)'
+  },
+  containerChild: {
+    backgroundColor: '#B0DB9C', 
+    padding: 20, 
+    borderRadius: 8
+  },
   buttonContainer: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-around",
   },
+  titleContent: {
+     marginBottom: 10, marginTop: 10, backgroundColor: '#FFFDF6', borderRadius: 10
+  },
   TextContent: {
-    borderWidth: 1, height: 100, textAlignVertical: 'top', marginBottom: 10, padding: 8,
+    backgroundColor: '#FFFDF6',
+    height: 250, 
+    textAlignVertical: 'top',
+    marginBottom: 10, 
+    padding: 8,
     borderRadius: 10
   }
 })
