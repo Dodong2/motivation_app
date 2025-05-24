@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 type TimerControlsProps = {
   isRunning: boolean;
@@ -11,9 +11,29 @@ type TimerControlsProps = {
 export const TimerControls: React.FC<TimerControlsProps> = ({ isRunning, start, pause, reset }) => {
   return (
     <View style={styles.controls}>
-      <Button title={isRunning ? 'Pause' : 'Start'} onPress={isRunning ? pause : start} />
+      <Pressable
+        onPress={isRunning ? pause : start}
+        style={({ pressed }) => [
+          styles.button,
+          { backgroundColor: isRunning ? '#FFA500' : '#4E71FF' }, // orange kapag pause, blue kapag start
+          pressed && styles.pressed,
+        ]}
+      >
+        <Text style={styles.buttonText}>{isRunning ? 'Pause' : 'Start'}</Text>
+      </Pressable>
+
       <View style={styles.spacer} />
-      <Button title="Reset" onPress={reset} />
+
+      <Pressable
+        onPress={reset}
+        style={({ pressed }) => [
+          styles.button,
+          { backgroundColor: '#FF3B30' }, // red for reset
+          pressed && styles.pressed,
+        ]}
+      >
+        <Text style={styles.buttonText}>Reset</Text>
+      </Pressable>
     </View>
   );
 };
@@ -25,5 +45,18 @@ const styles = StyleSheet.create({
   },
   spacer: {
     width: 10,
+  },
+  button: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+  },
+  pressed: {
+    opacity: 0.7,
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
 });

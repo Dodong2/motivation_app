@@ -3,7 +3,7 @@ import { TimerDisplay } from "@/components/TimerDisplay";
 import { TimerSet } from "@/components/TimerSet";
 import { useTimer } from "@/hooks/useTimer";
 import { useState } from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 export default function TimerScreen() {
   const [show, isShow] = useState(false)
@@ -28,7 +28,7 @@ export default function TimerScreen() {
     <View style={styles.containerParent}>
       {/* timer */}
       <View style={styles.containerChild}>
-      <Text style={{ color: '#4E71FF', fontStyle: 'italic', fontSize: 20, fontWeight: 'bold', fontFamily: 'font1' }}>Promodoro Timer</Text>
+      <Text style={{ color: '#4E71FF', fontStyle: 'italic', fontSize: 20, fontWeight: 'bold' }}>Promodoro Timer</Text>
       <TimerDisplay secondsLeft={secondsLeft} isBreak={isBreak} />
       <TimerControls
         isRunning={isRunning}
@@ -38,7 +38,16 @@ export default function TimerScreen() {
       />
       </View>
       {/* for time set */}
-      <Button title={show ? 'close' : 'change time'} onPress={show ? closeTimeSet : showTimeSet}/>
+      <Pressable
+        onPress={show ? closeTimeSet : showTimeSet}
+        style={({ pressed }) => [
+          styles.button,
+          { backgroundColor: show ? '#FF3B30' : '#4E71FF' }, // red kapag "close", blue kapag "change time"
+          pressed && styles.pressed,
+        ]}
+      >
+        <Text style={styles.text}>{show ? 'Close' : 'Change Time'}</Text>
+      </Pressable>
       {show && <TimerSet/>}
 
     </View>
@@ -64,5 +73,20 @@ const styles = StyleSheet.create({
     elevation: 5,
     marginBottom: 20,
     marginTop: 100
-  }
+  },
+  button: {
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  pressed: {
+    opacity: 0.7,
+  },
+  text: {
+    color: '#FFF',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
 });
