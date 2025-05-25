@@ -11,13 +11,16 @@
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
-        "NSUserNotificationAlertUsageDescription": "This app uses notifications to keep you focused."
-      }
+        "NSUserNotificationAlertUsageDescription": "This app uses notifications to keep you focused.",
+        "ITSAppUsesNonExemptEncryption": false
+      },
+      "bundleIdentifier": "com.carl.studysprint"
     },
     "android": {
       "permissions": [
         "NOTIFICATIONS",
-        "NOTIFICATIONS"
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS"
       ],
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/bookIcon.png",

@@ -22,7 +22,7 @@ export const TimerDisplay: React.FC<TimerDisplayProps> = ({
         {isBreak ? (
           <>
             <View style={styles.ImageContainer}>
-              <Text style={styles.BreakTime}>Focus Time</Text>
+              <Text style={styles.BreakTime}>Break Time</Text>
               <Image
                 source={require("../assets/images/break.png")}
                 style={styles.ImageStyle1}
