@@ -28,12 +28,14 @@ export const NotesModal = ({ visible, onClose }: Props) => {
             value={title}
             onChangeText={setTitle}
             placeholder="Enter title"
+            placeholderTextColor="#888"
             style={styles.titleContent}
           />
           <TextInput
             value={content}
             onChangeText={setContent}
             placeholder="Enter content"
+            placeholderTextColor="#888"
             multiline
             style={styles.TextContent}
           />
