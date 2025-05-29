@@ -15,6 +15,7 @@ export const useTimer = () => {
   const [isBreak, setIsBreak] = useState(false);
   const [timerEnded, setTimerEnded] = useState(false);
   const timerRef = useRef<number | null>(null);
+  const notificationLoopRef = useRef<number | null>(null);
 
   useEffect(() => {
     setSecondsLeft(isBreak ? BREAK_DURATION : WORK_DURATION);
@@ -28,7 +29,6 @@ export const useTimer = () => {
             clearInterval(timerRef.current!);
             setIsRunning(false);
             setTimerEnded(true);
-            // savePomodoroHistory();
             return 0;
           }
           return prev - 1;
@@ -50,7 +50,21 @@ export const useTimer = () => {
         type: 'info',
         text1: isBreak ? 'Break done! Time to focus.' : 'Focus done! Time to break.',
       });
-      playNotificationSound();
+      // para 3 times mag-virbrate at mag-sound after ng focus & breaktime 
+      let count = 0;
+      notificationLoopRef.current = setInterval(async () => {
+        if (count < 3) {
+          await Promise.all([
+            playNotificationSound(),
+            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
+          ])
+          count++;
+        } else {
+          clearInterval(notificationLoopRef.current!);
+          notificationLoopRef.current = null;
+        }
+      }, 1000); // every 1.5 seconds
+
       setIsBreak((prev) => !prev);
       setTimerEnded(false);
     }
@@ -59,6 +73,12 @@ export const useTimer = () => {
   const startTimer = () => {
     setIsRunning(true);
     Toast.show({ type: 'success', text1: 'Timer started' });
+
+    // Stop notification sound if it's still playing
+    if (notificationLoopRef.current) {
+      clearInterval(notificationLoopRef.current);
+      notificationLoopRef.current = null;
+    }
   };
 
   const pauseTimer = () => {
@@ -71,17 +91,6 @@ export const useTimer = () => {
     setSecondsLeft(isBreak ? BREAK_DURATION : WORK_DURATION);
     Toast.show({ type: 'info', text1: 'Timer reset' });
   };
-
-  //  const savePomodoroHistory = async () => {
-  //   try {
-  //     const stored = await AsyncStorage.getItem('pomodoroHistory');
-  //     const history = stored ? JSON.parse(stored) : [];
-  //     const updated = [...history, { timestamp: Date.now() }];
-  //     await AsyncStorage.setItem('pomodoroHistory', JSON.stringify(updated));
-  //   } catch (err) {
-  //     console.error('Failed to save pomodoro history:', err);
-  //   }
-  // };
 
   return {
     secondsLeft,

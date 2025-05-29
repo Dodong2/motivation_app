@@ -28,7 +28,7 @@ export default function TimerScreen() {
     <View style={styles.containerParent}>
       {/* timer */}
       <View style={styles.containerChild}>
-      <Text style={{ color: '#4E71FF', fontStyle: 'italic', fontSize: 20, fontWeight: 'bold' }}>Promodoro Timer</Text>
+      <Text style={{ color: '#4E71FF', fontStyle: 'italic', fontSize: 20, fontWeight: 'bold' }}>Pomodoro Timer</Text>
       <TimerDisplay secondsLeft={secondsLeft} isBreak={isBreak} />
       <TimerControls
         isRunning={isRunning}
